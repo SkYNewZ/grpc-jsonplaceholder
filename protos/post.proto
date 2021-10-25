@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option go_package = "internal/genproto";
+
+package jsonplaceholder.v1;
+
+import "user.proto";
+import "empty.proto";
+
+message Post {
+  User user = 1;
+  uint32 id = 2;
+  string title = 3;
+  string body = 4;
+}
+
+message GetPostRequest {
+  uint32 id = 1;
+}
+
+message ListPostsResponse {
+  repeated Post posts = 1;
+}
+
+message CreatePostRequest {
+  uint32 userId = 1;
+  string title = 3;
+  string body = 4;
+}
+
+message FilterPostRequest {
+  uint32 userId = 1;
+}
+
+service PostService {
+  rpc GetPost (GetPostRequest) returns (Post);
+  rpc ListPosts (Empty) returns (ListPostsResponse);
+  rpc CreatePost(CreatePostRequest) returns (Post);
+  rpc UpdatePost(Post) returns (Post);
+  rpc DeletePost(GetPostRequest) returns (Empty);
+  rpc FilterPost(FilterPostRequest) returns (ListPostsResponse);
+}

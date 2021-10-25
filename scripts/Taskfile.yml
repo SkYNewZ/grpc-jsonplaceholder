@@ -1,0 +1,20 @@
+version: "3"
+
+tasks:
+  golangci-lint:
+    desc: Install golangci-lint
+    cmds:
+      - go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@{{.VERSION}}
+    vars:
+      VERSION: v1.41.0
+    status:
+      - command -v golangci-lint
+
+  ko:
+    desc: Install ko
+    cmds:
+      - go install -v github.com/google/ko@{{.VERSION}}
+    vars:
+      VERSION: v0.9.3
+    status:
+        - command -v ko

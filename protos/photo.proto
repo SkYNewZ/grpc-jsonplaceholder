@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "internal/genproto";
+
+package jsonplaceholder.v1;
+
+import "album.proto";
+
+message Photo {
+  Album album = 1;
+  uint32 id = 2;
+  string title = 3;
+  string url = 4;
+  string thumbnailUrl = 5;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "internal/genproto";
+
+package jsonplaceholder.v1;
+
+import "post.proto";
+import "empty.proto";
+
+message Comment {
+  Post post = 1;
+  uint32 id = 2;
+  string name = 3;
+  string email = 4;
+  string body = 5;
+}
+
+message GetCommentRequest {
+  uint32 id = 1;
+}
+
+message ListCommentsResponse {
+  repeated Comment comments = 1;
+}
+
+service CommentService {
+  rpc GetComment (GetCommentRequest) returns (Comment);
+  rpc ListComments (Empty) returns (ListCommentsResponse);
+}

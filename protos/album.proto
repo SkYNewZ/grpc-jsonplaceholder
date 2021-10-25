@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "internal/genproto";
+
+package jsonplaceholder.v1;
+
+import "user.proto";
+
+message Album {
+  User user = 1;
+  uint32 id = 2;
+  string title = 3;
+}

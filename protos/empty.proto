@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option go_package = "internal/genproto";
+
+package jsonplaceholder.v1;
+
+message Empty {}

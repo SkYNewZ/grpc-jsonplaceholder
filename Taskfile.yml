@@ -1,0 +1,43 @@
+version: '3'
+
+vars:
+  MODULE: "github.com/SkYNewZ/grpc-jsonplaceholder"
+
+includes:
+  tools: ./scripts
+
+tasks:
+  protos:
+    desc: Compile proto files
+    cmds:
+      - protoc --proto_path={{.PROTO_DIR}} --go_out=. --go-grpc_out=. {{.PROTO_DIR}}/*.proto
+    vars:
+      PROTO_DIR: protos
+    sources:
+      - protos/*.proto
+    generates:
+      - ./internal/genproto/*.pb.go
+
+  lint:
+    desc: Run golangci-lint
+    deps: [ tools:golangci-lint ]
+    cmds:
+      - golangci-lint run ./... --enable revive,unparam,misspell
+    sources:
+      - ./**/*.go
+
+  tests:
+    desc: Go test
+    cmds:
+      - go test -v -race -coverprofile=cover.out -cover ./...
+      - go tool cover -html=cover.out -o coverage.html
+    sources:
+      - ./**/*.go
+
+  build:
+    desc: Build Go applications
+    deps: [ tools:ko ]
+    cmds:
+      - ko publish ./userservice ./postservice ./commentservice
+    env:
+      KO_DOCKER_REPO: ko.local

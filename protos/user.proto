@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option go_package = "internal/genproto";
+
+package jsonplaceholder.v1;
+
+import "empty.proto";
+
+message User {
+
+  message Geo {
+    string lat = 1;
+    string lng = 2;
+  }
+
+  message Address {
+    string street = 1;
+    string suite = 2;
+    string city = 3;
+    string zipcode = 4;
+    Geo geo = 5;
+  }
+
+  message Company {
+    string name = 1;
+    string catchPhrase = 2;
+    string bs = 3;
+  }
+
+  uint32 id = 1;
+  string name = 2;
+  string username = 3;
+  string email = 4;
+  Address address = 5;
+  string phone = 6;
+  string website = 7;
+  Company company = 8;
+}
+
+message GetUserRequest {
+  uint32 id = 1;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+}
+
+service UserService {
+  rpc GetUser (GetUserRequest) returns (User);
+  rpc ListUsers (Empty) returns (ListUsersResponse);
+}
